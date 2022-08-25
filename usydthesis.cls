@@ -134,8 +134,8 @@
   October\or November\or December\fi\space\number\year}
 
 \def\@sid#1{\textsc{Student ID}: #1}
-\def\@supervisor#1{Supervisor: #1}
-\def\@assocsupervisor#1{Associate Supervisor: #1}
+\def\@supervisor#1{\textbf{Supervisor:} #1}
+\def\@assocsupervisor#1{\textbf{Associate Supervisor:} #1}
 
 % thesis title page
 \def\@maketitle{
@@ -145,7 +145,7 @@
     \begingroup
     \LARGE\bfseries \centering
     \openup\medskipamount
-    \@title\par\vspace{30pt}%
+    \setstretch{1.8}\@title\par\vspace{30pt}%
     \centering\mdseries{\sc \authors}\par
     \centering\@sid{\sid}\par\bigskip
     \endgroup
@@ -157,17 +157,19 @@
       \@ifundefined{assocsupervisor}{} {
        \\ \centering\@assocsupervisor{\assocsupervisor}
         }
-      \par\bigskip
+      \vskip 15pt
+      \par\bigskip\setstretch{1.3}
       This thesis is submitted in partial fulfillment of\\
       the requirements for the degree of\\
       \degree
     \vfil
+    \vskip 20pt
       {\department\\
       The University of Sydney\\
-      Australia}\\
+      New South Wales, Australia}\\
     \vfil
       \Today
-    \vskip50mm
+    \vskip40mm
       \includegraphics[width=50mm]{style/usyd-primary-colour}\\
     \end{center}
   \endgroup
