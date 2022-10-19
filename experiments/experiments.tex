@@ -39,7 +39,7 @@ After getting familiarised with the current technology, my natural research inst
 \begin{figure}[hp]
 \centering
 \includegraphics[scale=0.5]{sledge-design-a-b}
-\caption{\footnotesize{Visualisation of the current edge computing system design layout, a: VM-Based implementation, b: Container-Based implementation }}
+\caption{\footnotesize{Visualisation of the current edge computing system design layout, a: VM-Based implementation, b: Container-Based implementation}}
 \captionsetup{aboveskip=0pt,font=it}
 \label{fig:javascript_meme}
 \end{figure}
@@ -47,7 +47,7 @@ After getting familiarised with the current technology, my natural research inst
 \bigskip
 \bigskip
 
-\textbf{{\Large Chapter 4.3 Configuration}}
+\textbf{{\Large Chapter 4.3 Configuration and Further Understanding}}
 
 \bigskip
 
@@ -87,21 +87,63 @@ A web framework, sometimes also referred as a web application framework, is a co
 
 There are usually two categories of web frameworks: client-side framework and server-side framework. The former is usually used in order to construct dynamic web applications [45] while the latter is usually used to develop back-end API services. According to 2022 annual developer survey from stack overflow, some of the most popular client-side frameworks including React.js, Angular and Vue.js while some of the most popular server-side frameworks including Node.js, ASP.NET and Django (server-side Django REST framework) [46] [47] [48] [49] [50] [51] [52] [53].
 
+It has been mentioned in multiple research articles that running full web applications using the current cloud solution may produce too much overhead, thus leads to inefficiency. For example, Gackstatter [54] recognise the limitation of today's "cloud-centric model" when it comes to deploying web applications at the edge. Specifically, the author stated that applying the current solution such as virtual machines and containers does not promise to be an effective solution due to limited resources available. Additionally, Gadepalli et al. not only pointed out the widely adoption of the virtual machine/container model, but also stated that server applications built using WASM functions that runs naively have the potential to expand the current use case of comprehensive applications running from the edge due to the reduction of the overhead which reduce the respond time down to within 10 milliseconds [39].
+
+With the current model of implementation, docker or Kubernetes are usually used in the process in order to prepare an application for edge deployment. This would "wrap" the application into containers which will be further deployed onto self-managed serverless infrastructures or cloud services that provides edge services such as Amazon Web Service or Microsoft Azure to be distributed to edge devices across data centres around the world.
+
+The topic and question of my research is to discover the performance gap and inconsistency between the current model of edge applications which includes application development and deployment with virtual machines, containers and traditional language runtimes, and the proposed WebAssembly solution which is to run functions as microservices directly from the native operating system using WebAssembly through a WASM runtime.
+
+Currently at this stage, the true performance capability of WebAssembly has not yet been realised due to the relatively short time it has been around in comparison to JavaScript - which has almost 30 years of development. However, it is apparent to us that WebAssembly have a huge potential in terms of it's performance both when running in web browsers as well as running on operating systems naively through a runtime. We are able to back this up with the performance data of JavaScript over the years. In a presentation, Verschore presented a figure which stated that between 2001 and 2009, there was an 100-times improvement in JavaScript's performance as well as huge increases in the browser Octane score (web page loading speed) [55].
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{js-perf}
+\caption{\footnotesize{SunSpider benchmark score for the SpiderMonkey engine which is used in the Firefox browser}}
+\captionsetup{aboveskip=0pt,font=it}
+\label{fig:javascript_meme}
+\end{figure}
+
+\bigskip
+\bigskip
+
+On top of that, the JavaScript engine behind popular browsers such as Google Chrome [56] and Brave [57] - V8 [58], also had an incredible journey from when its first released to the public in 2008. The V8 development team undertook and released a set of benchmark scores comparing the performance of the Chrome browser from it's original beta to the versions in 2018. The results showed that in just 10 years, both its V8 Bench score [59] and Speedometer score [60] increased by 4 times and the engine had also became a lot more stable as well as added support for a lot more chip architectures such as ARM and ARM 64 [61] [62].
+
+\bigskip
+
+\begin{figure}[hp]
+\centering
+\includegraphics[scale=0.5]{chrome-v8-bench}
+\caption{\footnotesize{Google Chrome's V8 Bench score between its original beta and the version in 2018}}
+\captionsetup{aboveskip=0pt,font=it}
+\label{fig:javascript_meme}
+\end{figure}
+
+\bigskip
+\bigskip
+
+\bigskip
+
+\begin{figure}[hp]
+\centering
+\includegraphics[scale=0.5]{chrome-speedometer-1}
+\caption{\footnotesize{Google Chrome's Speedometer 1 score between its original beta and the version in 2018}}
+\captionsetup{aboveskip=0pt,font=it}
+\label{fig:javascript_meme}
+\end{figure}
+
+\bigskip
+\bigskip
+
+One of the recent example is 
+
 \bigskip
 \bigskip
 \bigskip
 \bigskip
 \bigskip
+\bigskip
 
-
-
-This series of experiment is to compare the performance under multiple scenarios between a traditional application framework such as express js with one or multiple WebAssembly frameworks mentioned above.
-
-From all of my literature reviews and research so far, the theory is that the current way of running web applications on edge devices are not very efficient and have rooms for improvement. At the moment, in order to get an application up and running and distributed around the world on edge devices, developers needs containerise their application using docker or Kubernetes. This way, applications will be "wrapped" and turn into containers which can be furthered deployed onto self-managed serverless or cloud services such as Amazon Web Services or Microsoft Azure.
-
-The thing with cloud services is that they usually run those containers in a virtual machine. This further decreases the performance and the latency of the application relative to executing straight from the native operating system.
-
-The topic and question of my research is to discover the performance gap and inconsistency between application running on VM + container + traditional languages (python or c sharp) and the next generation solution which is to run directly from the native operation systems using WebAssembly through a WASM runtime. In the future, it is almost certain that the performance of WASM will improved drastically due to the constant improving of WASM runtimes. In comparison, JavaScript has almost 30 years of development under the hood being developed back in 1995. Just like WebAssembly, developers started to use JavaScript outside of web browsers. Currently the most popular bring Node JS (https://nodejs.org/en/), followed by deno (https://deno.land/) with the newest release Bun js which "claims that it is able to perform 3 times faster than node js" (https://bun.sh/).
+Just like WebAssembly, developers started to use JavaScript outside of web browsers. Currently the most popular bring Node JS (https://nodejs.org/en/), followed by deno (https://deno.land/) with the newest release Bun js which "claims that it is able to perform 3 times faster than node js" (https://bun.sh/).
 
 I would like this experiment to be the "Main" experiment. After setting up and conducting the experiment, we will then decide whether to conduct more experiments or this is significance enough. During the experiment, I will be writing up the report at the same time (especially during the setup process) to document as well as to record data.
 
